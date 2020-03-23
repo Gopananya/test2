@@ -1,7 +1,7 @@
 <template>
 <div class="container">
     <h1>Percentage</h1>
-    <div v-if='productList.length > 0'>
+    <div v-if='percentage.length > 0'>
             <table class="table">
                 <thead>
                 <tr>
@@ -12,7 +12,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="product in productList" :key="product.id">
+                <tr v-for="product in percentage" :key="product.id">
                     <th scope="row">{{product.id}}</th>
                     <td>{{product.title}}</td>
                     <td>{{product.percentage ? product.percentage : '0%'}}</td>
@@ -25,18 +25,15 @@
 </template>
 
 <script>
-    import * as productService from '../../services/productService.js'
+    import {mapGetters} from 'vuex'
     export default {
 
-       data() {
-            return {
-                productList: []
-            }
+       created(){
+            this.$store.dispatch('percentage')
+                .catch(e => console.log(e))
         },
-        
-        created: async function(){
-            this.productList = await productService.percentage()
-            console.log(this.productList)
+        computed: {
+            ...mapGetters(['percentage'])
         }
 
     }

@@ -37,13 +37,17 @@ export function getById(id){
 
 
 export function del(id){
-	axios.delete('/api/products/'+id)
+	return new Promise((res, rej) => {
+		axios.delete('/api/products/'+id).then(resopnse => {
+			res(id);
+		}).catch(err => rej(err))
+	})
 }
 
 export function add(data){
 	return new Promise(function(res, rej){
 		axios.post('/api/products', data).then(resopnse => {
-			router.push('/dashboard/products/all');
+			// router.push('/dashboard/products/all');
 			res(resopnse.data);
 		}).catch(function(err){rej(err)})
 	})
@@ -52,7 +56,7 @@ export function add(data){
 export function edit(id, date){
 	return new Promise((res, rej) => {
 		axios.put('/api/products/' + id,date).then(resopnse => {
-			router.push('/dashboard/products/all');
+			// router.push('/dashboard/products/all');
 			res(resopnse.data);
 		}).catch(function(err){rej(err)})
 	})

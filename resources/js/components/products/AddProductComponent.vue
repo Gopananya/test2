@@ -12,7 +12,6 @@
 </template>
 
 <script>
-    import * as productService from '../../services/productService.js'
     export default {
         data() {
             return {
@@ -21,7 +20,7 @@
         },
         methods: {
             save(){
-                productService.add({title: this.name})
+                this.$store.dispatch('add', {title: this.name})
                 .catch(function(err){
                     document.querySelector('.err').innerHTML = "The title field is required."
                 })

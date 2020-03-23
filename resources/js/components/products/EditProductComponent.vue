@@ -23,7 +23,7 @@
         methods: {
             save(){
                 console.log(this.title)
-                productService.edit(this.id, {title: this.title})
+                this.$store.dispatch('edit', [{title: this.title}, this.id])
                 .catch(function(err){
                     document.querySelector('.err').innerHTML = "The title field is required."
                 })

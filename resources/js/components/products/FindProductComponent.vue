@@ -4,7 +4,7 @@
         <label>Enter date</label>
         <input type="date" class="form-control" name="" v-model="date" @change="search">
     </div>
-        <div v-if='productList.length > 0'>
+        <div v-if='products.length > 0'>
             <table class="table">
                 <thead>
                 <tr>
@@ -15,7 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="product in productList" :key="product.id">
+                <tr v-for="product in products" :key="product.id">
                     <th scope="row">{{product.id}}</th>
                     <td>{{product.title}}</td>
                     <td>{{product.purchased_amount ? product.purchased_amount : 0}}</td>
@@ -29,22 +29,25 @@
 </template>
 
 <script>
-    import * as productService from '../../services/productService.js'
+    import {mapGetters} from 'vuex'
     export default {
         name: 'FindProductComponent',
         data() {
             return {
-                date: '',
-                productList: []
+                date: ''
             }
         },
         methods: {
-            search: async function(){
-                if(this.date !== '') {
-                   this.productList = await productService.getByDate(this.date)
+            search(){
+                if(this.date !== '') {find
+                   this.$store.dispatch('find',this.date)
+                   .catch(e => console.log(e));
                 }
             }
 
+        },
+        computed: {
+            ...mapGetters(['products'])
         }
 
     }

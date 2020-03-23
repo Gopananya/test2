@@ -28,27 +28,22 @@
 </template>
 
 <script>
-    import * as productService from '../../services/productService.js'
+    import {mapGetters} from 'vuex'
     export default {
-        data() {
-            return {
-                productList: []
-            }
-        },
         methods: {
             del(id){
-              productService.del(id)
-              this.productList = this.productList.filter(e => {
-                return e.id !== id
-              })
+              this.$store.dispatch('delete', id)
+              
             }
 
         },
-        created: async function(){
-            this.productList = await productService.getAll()
+        created(){
+            this.$store.dispatch('all')
+                .catch(e => console.log(e))
+                // console.log(this.productList)
         },
         computed: {
-            // ...mapGetters(['getUser', 'getToken', 'isLoggedIn'])
+            ...mapGetters(['productList'])
         }
 
     }
